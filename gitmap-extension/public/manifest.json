@@ -6,5 +6,10 @@
     "default_popup": "index.html",
     "default_title": "GitMap"
   },
+  "permissions": [
+        "tabs",
+        "activeTab",
+        "geolocation"
+    ],
   "version": "1.0"
 }
