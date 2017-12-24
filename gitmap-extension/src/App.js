@@ -1,18 +1,36 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import axios from 'axios';
 
 class App extends Component {
+
+  constructor(props){
+    super(props);
+    this.state = {
+      data: {},
+    }
+  }
+
+  saveProject() {
+    axios.post('http://localhost:5000/newproject', {
+      username: 'riceball1',
+      url: 'www.github111.com',
+      latitude: '1231242412',
+      longitude: '1312312'
+    }).then(function(response) {
+      console.log(response.data);
+    }).catch(function(error) {
+      console.log(error);
+    });
+  }
+
   render() {
+    console.log(this.state.data);
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <h3>Welcome to GitMap!</h3>
+        <p>Click on the button below to share your open source initiative with developers near you!</p>
+        <button onClick={() => this.saveProject()}>Save</button>
       </div>
     );
   }
