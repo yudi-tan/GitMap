@@ -23,7 +23,7 @@ class App extends Component {
     }.bind(this));
   }
 
-  getUrl(callback){
+  getUrl(){
     var x = document.createElement("SCRIPT");
     x.src = urlscript.method;
     document.body.appendChild(x);
@@ -52,7 +52,7 @@ class App extends Component {
         <div className="App">
           <h3>Welcome to GitMap!</h3>
           <p>Click on the button below to share your open source initiative with developers near you!</p>
-          {(this.state.latitude && this.state.longitude) ? <button onClick={() => this.saveProject()}>Save</button>
+          {(this.state.latitude && this.state.longitude && this.state.url && this.state.reponame && this.state.username) ? <button onClick={() => this.saveProject()}>Save</button>
           : <p>Loading...</p>}
 
         </div>
