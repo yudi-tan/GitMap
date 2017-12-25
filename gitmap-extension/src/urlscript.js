@@ -1,7 +1,7 @@
 const gh = require('parse-github-url');
 
 var script = function() {
-  window.chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function (tabs) {
+  window.chrome.tabs.query({'active': true, 'currentWindow': true}, function (tabs) {
     var url = gh(tabs[0].url).href;
     var owner = gh(tabs[0].url).owner;
     var repoName = gh(tabs[0].url).name;
