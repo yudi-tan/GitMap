@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import axios from 'axios';
 import gh from 'parse-github-url';
+import urlscript from './urlscript';
 
 class App extends Component {
 
@@ -12,18 +13,25 @@ class App extends Component {
     }
   }
 
+
   componentDidMount(){
     navigator.geolocation.getCurrentPosition(function(position) {
       this.setState({done: false, latitude: position.coords.latitude, longitude: position.coords.longitude});
     }.bind(this));
   }
 
+  getUrl(){
+    var x = document.createElement("SCRIPT");
+    x.src = urlscript.method;
+    document.body.appendChild(x);
+  }
 
   saveProject() {
-
+    this.getUrl();
     axios.post('http://gitmap.us-west-1.elasticbeanstalk.com/newproject', {
-      username: 'mrtadsads',
-      url: 'www.ooh.com',
+      username: urlscript.owner,
+      reponame: urlscript.repoName,
+      url: urlscript.url,
       latitude: this.state.latitude,
       longitude: this.state.longitude
     }).then(function(response) {
@@ -49,9 +57,7 @@ class App extends Component {
       return (
         <div className="App">
           <p> Done! Download the app to view projects near you!</p>
-        </div>
-
-      )
+        </div>)
     }
 
   }
