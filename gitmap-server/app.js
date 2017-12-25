@@ -22,7 +22,7 @@ var dbpassword = credentials.password;
 
 mongoose.connect(`mongodb://${dbuser}:${dbpassword}@ds125556.mlab.com:25556/gitmap`, {useMongoClient: true});
 
-var schema = new mongoose.Schema({ username: 'string', url: 'string', latitude: 'string', longitude: 'string' });
+var schema = new mongoose.Schema({ username: 'string', url: 'string', reponame: 'string', latitude: 'string', longitude: 'string' });
 
 var projectsModel = mongoose.model('Project', schema);
 
@@ -40,6 +40,7 @@ app.get('/projects', function(req, res) {
 app.post('/newproject', function(req, res) {
   var data = {
     username: req.body.username,
+    reponame: req.body.reponame,
     url: req.body.url,
     latitude: req.body.latitude,
     longitude: req.body.longitude
