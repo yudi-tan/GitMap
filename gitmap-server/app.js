@@ -22,7 +22,10 @@ var dbpassword = credentials.password;
 
 mongoose.connect(`mongodb://${dbuser}:${dbpassword}@ds125556.mlab.com:25556/gitmap`, {useMongoClient: true});
 
-var schema = new mongoose.Schema({ username: 'string', url: 'string', reponame: 'string', latitude: 'string', longitude: 'string' });
+var schema = new mongoose.Schema({ username: 'string', url: 'string', reponame: 'string', location: {
+  type: ['number'],
+  index: '2d'
+} });
 
 var projectsModel = mongoose.model('Project', schema);
 
@@ -42,17 +45,27 @@ app.post('/newproject', function(req, res) {
     username: req.body.username,
     reponame: req.body.reponame,
     url: req.body.url,
-    latitude: req.body.latitude,
-    longitude: req.body.longitude
+    location: [req.body.longitude, req.body.latitude]
   };
   projectsModel.create(data, (err, proj) => {
     if (err) {
-      res.send('error in POST');
+      res.send(err);
     } else {
       res.send(data);
     };
   });
 })
+
+app.get('/projects/:longitude/:latitude/:limit/:distance', function(req, res) {
+  var longitude = req.params.longitude;
+  var latitude = req.params.latitude;
+
+
+
+
+
+});
+
 
 var port = process.env.PORT || 5000;
 
