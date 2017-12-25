@@ -14,24 +14,28 @@ class App extends Component {
   }
 
 
+
   componentDidMount(){
     navigator.geolocation.getCurrentPosition(function(position) {
       this.setState({done: false, latitude: position.coords.latitude, longitude: position.coords.longitude});
+      this.getUrl();
+      console.log(this.state);
     }.bind(this));
   }
 
-  getUrl(){
+  getUrl(callback){
     var x = document.createElement("SCRIPT");
     x.src = urlscript.method;
     document.body.appendChild(x);
+    this.setState({ done: false, latitude: this.state.latitude, longitude: this.state.longitude, url: localStorage.getItem('url'),
+                    reponame: localStorage.getItem('repoName'), username: localStorage.getItem('owner') });
   }
 
   saveProject() {
-    this.getUrl();
     axios.post('http://gitmap.us-west-1.elasticbeanstalk.com/newproject', {
-      username: urlscript.owner,
-      reponame: urlscript.repoName,
-      url: urlscript.url,
+      username: this.state.username,
+      reponame: this.state.reponame,
+      url: this.state.url,
       latitude: this.state.latitude,
       longitude: this.state.longitude
     }).then(function(response) {

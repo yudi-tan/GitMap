@@ -9,7 +9,8 @@
   "permissions": [
         "tabs",
         "activeTab",
-        "geolocation"
+        "geolocation",
+        "storage"
     ],
   "version": "1.0"
 }
