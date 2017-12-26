@@ -66,6 +66,9 @@ app.get('/projects', function(req, res, next) {
   var lat = req.query.lat;
   var maxDistance = req.query.dist || 50000; //default to 50 km
   var limit = req.query.limit || 20;
+  if (!lng || !lat) {
+    res.send('no longitude / latitude given');
+  }
 
   projectsModel.aggregate([
     { "$geoNear": {
