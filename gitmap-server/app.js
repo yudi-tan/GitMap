@@ -31,33 +31,6 @@ var schema = new mongoose.Schema({ username: 'string', url: 'string', reponame: 
 
 schema.index({ "loc": "2dsphere" });
 
-// var geoSchema = new mongoose.Schema({
-//   type: {
-//     type: String,
-//     default: 'Point'
-//   },
-//   coordinates: {
-//     type: [Number],
-//     index: '2d'
-//   }
-// });
-//
-// var schema = new Schema({
-//   username: {
-//     type: String,
-//     required: [true, 'Username is required.']
-//   },
-//   url: {
-//     type: String,
-//     required: [true, 'URL is required.']
-//   },
-//   reponame: {
-//     type: String,
-//     required: [true, 'RepoName is required.']
-//   },
-//   location: geoSchema
-// });
-
 var projectsModel = mongoose.model('Project', schema);
 
 app.get('/allprojects', function(req, res) {
@@ -88,44 +61,22 @@ app.post('/newproject', function(req, res) {
 })
 
 app.get('/projects', function(req, res, next) {
-  // var lng = req.query.lng;
-  // var lat = req.query.lat;
-  // var limit = req.query.limit || 20;
-  // limit = parseInt(limit);
-  // var maxDistance = req.query.distance || 500000000;
-  // maxDistance /= 6378.1;
-  // var coords = [lng, lat];
-  // projectsModel.find({
-  //   location: {
-  //     $near: coords,
-  //     $maxDistance: maxDistance
-  //   }
-  // }, function(err, projects) {
-  //   if (err){
-  //      res.send(err);
-  //   } else {
-  //     res.send(projects);
-  //   }
-  // }).limit(limit);
-  // projectsModel.geoNear(
-  //       {type: 'Point', coordinates: [parseFloat(req.query.lng), parseFloat(req.query.lat)]},
-  //       {spherical: true}
-  //   ).then(function(projs){
-  //       res.send(projs);
-  //   }).catch(next);
 
   var lng = req.query.lng;
   var lat = req.query.lat;
+  var maxDistance = req.query.dist || 50000; //default to 50 km
+  var limit = req.query.limit || 20;
 
   projectsModel.aggregate([
     { "$geoNear": {
             "near": {
                 "type": "Point",
-                "coordinates": [-95.4869710, 30.0138430]
+                "coordinates": [parseFloat(lng), parseFloat(lat)]
             },
             "distanceField": "distance",
             "spherical": true,
-            "maxDistance": 1090
+            "maxDistance": parseFloat(maxDistance),
+            "limit": parseInt(limit)
         }}
   ],
   function(err, projs) {
