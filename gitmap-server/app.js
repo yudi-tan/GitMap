@@ -75,13 +75,12 @@ app.post('/newproject', function(req, res) {
   });
 })
 
+//DELETE a project
 app.delete('/project/:id', function(req, res) {
-  projectsModel.remove({_id: req.body.id}, (err, proj) => {
-    if (err) {
+  projectsModel.remove({_id: req.params.id}, function(err, proj){
+    if(err){
       res.send(err);
-    } else{
-      console.log(proj);
-    }
+    } res.json({ message: 'Successfully deleted '})
   })
 })
 
