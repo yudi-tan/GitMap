@@ -75,6 +75,16 @@ app.post('/newproject', function(req, res) {
   });
 })
 
+app.delete('/project/:id', function(req, res) {
+  projectsModel.remove({_id: req.body.id}, (err, proj) => {
+    if (err) {
+      res.send(err);
+    } else{
+      console.log(proj);
+    }
+  })
+})
+
 
 //GET projects that are within maxDistance of lng and lat
 app.get('/projects', function(req, res, next) {
