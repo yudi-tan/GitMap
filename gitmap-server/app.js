@@ -33,6 +33,7 @@ schema.index({ "loc": "2dsphere" });
 
 var projectsModel = mongoose.model('Project', schema);
 
+//GET all projects
 app.get('/allprojects', function(req, res) {
   projectsModel.find({}, function(err, proj) {
     if(err){
@@ -44,6 +45,20 @@ app.get('/allprojects', function(req, res) {
     })
 });
 
+//GET all projects of ONE user
+app.get('/user', function(req, res) {
+  var username = req.query.id;
+  projectsModel.find({username}, function(err, proj) {
+    if(err){
+      console.log(err);
+      res.send('error in GET');
+    } else {
+        res.send(proj);
+    }
+    })
+});
+
+//POST / CREATE (upload) a new project
 app.post('/newproject', function(req, res) {
   var data = {
     username: req.body.username,
@@ -60,6 +75,8 @@ app.post('/newproject', function(req, res) {
   });
 })
 
+
+//GET projects that are within maxDistance of lng and lat
 app.get('/projects', function(req, res, next) {
 
   var lng = req.query.lng;
