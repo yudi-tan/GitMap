@@ -76,7 +76,8 @@ class App extends Component {
       return (
         <div className="App">
           <p>
-            You can only save repos that belong to you!</p>
+            You are either not logged in on GitHub or trying to
+            upload a repo that does not belong to you.</p>
         </div>
       )
     }
