@@ -8,7 +8,15 @@ var script = function() {
     localStorage.setItem('owner', owner);
     localStorage.setItem('url', url);
     localStorage.setItem('repoName', repoName);
-    console.log('local storage ready');
+});
+  window.chrome.cookies.get({ url: 'https://github.com', name: 'dotcom_user' },
+  function (cookie) {
+    if (cookie) {
+      localStorage.setItem('gmghUsername', cookie.value);
+    }
+    else {
+      console.log('Can\'t get cookie! Check the name!');
+    }
 });
 };
 

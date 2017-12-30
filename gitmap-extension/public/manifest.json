@@ -10,7 +10,9 @@
         "tabs",
         "activeTab",
         "geolocation",
-        "storage"
+        "storage",
+        "cookies",
+        "*://*.github.com/*"
     ],
   "version": "1.0"
 }
