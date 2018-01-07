@@ -33,6 +33,10 @@ schema.index({ "loc": "2dsphere" });
 
 var projectsModel = mongoose.model('Project', schema);
 
+app.get('/', function(req, res){
+  res.send('Welcome to GITMAP API.')
+});
+
 //GET all projects
 app.get('/allprojects', function(req, res) {
   projectsModel.find({}, function(err, proj) {
@@ -120,10 +124,11 @@ app.get('/projects', function(req, res, next) {
 });
 
 
-var port = process.env.PORT || 5000;
+var port = process.env.PORT || 8080;
+const host = '0.0.0.0';
 
-var server = app.listen(port, function() {
-  console.log('Express server listening on port ' + 5000);
+var server = app.listen(port, host, function() {
+  console.log('Express server listening on port ' + port);
 });
 
 module.exports = app;
