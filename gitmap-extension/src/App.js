@@ -36,7 +36,7 @@ class App extends Component {
 
   saveProject() {
     if (this.state.gmghUsername === this.state.username){
-      axios.post('http://gitmap.us-west-1.elasticbeanstalk.com/newproject', {
+      axios.post('https://www.gitmapapi.us/newproject', {
         username: this.state.username,
         reponame: this.state.reponame,
         url: this.state.url,
