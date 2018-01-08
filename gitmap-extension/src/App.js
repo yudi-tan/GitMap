@@ -69,7 +69,7 @@ class App extends Component {
       return (
         <div className="App">
           <p>
-            Done! Download the app to view projects near you!</p>
+            Done! Visit <a href="https://gitmap.surge.sh/" target="_blank">GitMap</a> to view projects near you!</p>
         </div>
       )
     } else if (!this.state.done && this.state.notOwnRepo) {
